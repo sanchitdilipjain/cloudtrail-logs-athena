@@ -74,25 +74,10 @@ Below are the steps we need to follow to implement this tutorial
   
 5. Retrieve insights from Athena table
 
-    - Console Sign-in activity: The below query display details such as user name, IP address, time of day, whether the login was from a mobile console version, and whether multi-factor authentication was used.
+    - AWS Sign-in activity: The below query provides user-level details with respect to the AWS console login event
  
-           SELECT useridentity.username,
-                     errormessage,
-                     sourceipaddress,
-                     eventtime,
-                     additionaleventdata
-            FROM default.TABLE_NAME
+           SELECT *
+            FROM cloudtrail_cloudtrail_logs
             WHERE eventname = 'ConsoleLogin'
     
-    - AWS event errors: The below query present the top 10 errors that have occurred from the start of the year.
-
-           SELECT count (*) AS TotalEvents,
-                     eventname,
-                     errorcode,
-                     errormessage
-           FROM default.TABLE_NAME
-           WHERE errorcode is NOT null
-                    AND eventtime >= '2021-03-01T00:00:00Z'
-           GROUP BY  eventname, errorcode, errormessage
-           ORDER BY  TotalEvents DESC limit 10
-
+   
